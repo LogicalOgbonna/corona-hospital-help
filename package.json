@@ -20,7 +20,8 @@
     "react-google-maps": "^9.4.5",
     "react-scripts": "3.4.1",
     "recompose": "^0.30.0",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
