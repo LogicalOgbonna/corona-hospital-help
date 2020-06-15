@@ -7,7 +7,6 @@ const {
     withGoogleMap,
     GoogleMap,
 } = require("react-google-maps");
-const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
 interface MapWithAMarkerWithLabelProps {
     lat: number;
