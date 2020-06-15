@@ -24,13 +24,6 @@ const MapWithAMarkerWithLabel = compose(
                 defaultZoom={12}
                 defaultCenter={{ lat: lat, lng: lng }}
             >
-                <MarkerWithLabel
-                    position={{ lat: lat, lng: lng }}
-                    // labelAnchor={new google.maps.Point(0, 0)}
-                    labelStyle={{ backgroundColor: "yellow", fontSize: "32px", padding: "16px" }}
-                >
-                    <div>Hello There!</div>
-                </MarkerWithLabel>
             </GoogleMap>}
 
         </Col>
