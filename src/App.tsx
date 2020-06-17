@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import { Footer, Header } from "./components";
-import { HomePage } from "./pages";
+import { HomePage, RecentSearch } from "./pages";
 
 function App(props: any) {
 
@@ -19,8 +19,11 @@ function App(props: any) {
     <Router>
       <Header />
       <Switch>
-        <Route path="/">
+        <Route path="/" exact>
           <HomePage coords={props.coords} lat={props.coords.latitude} lng={props.coords.longitude} />
+        </Route>
+        <Route path="/search-results">
+          <RecentSearch />
         </Route>
       </Switch>
       <Footer
@@ -59,7 +62,13 @@ const GeoLocationNotEnabled = ({ title, subtitle }: GeoLocationNotEnabledProps) 
     <Result
       status="500"
       title={title}
-      subTitle={subtitle}
+      subTitle={
+        <Row className="justify-content-center">
+          <Col md="2" className="">
+            <Spin className="ml-3" size="small" />
+            <p>{subtitle}...</p>
+          </Col>
+        </Row>}
     />
   </Col>
 </Row>

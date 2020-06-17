@@ -19,6 +19,7 @@ const IconText = ({ icon, text }: IconTextProps) => (
     </Space>
 );
 function SearchResult({ loading, result }: SearchResultProps) {
+    console.log(result)
     return (
         <Row className="justify-content-center my-5">
             <Col style={{ minHeight: "250px" }} md="8">
@@ -30,7 +31,7 @@ function SearchResult({ loading, result }: SearchResultProps) {
                             title="No Hospital To Display"
                             subTitle="Select a radius to search for hospital."
                         />}
-                        {result.map((data: any) => <Col md="4" className="mt-2">
+                        {result.map((data: any) => <Col key={data.name} md="4" className="mt-2">
                             <Card
                                 style={{ width: 300 }}
                                 cover={

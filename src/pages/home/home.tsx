@@ -33,11 +33,15 @@ function Home({ lat, lng, coords }: HomeProps) {
     const getHospital = () => {
         setLoading(true)
         getSearchResult(lat, lng, radius, searchBy).then((res: any) => {
+            if (res.length) db.collection("search").add({
+                searchBy: searchBy,
+                radius: radius,
+                time: new Date(),
+                location
+            })
             setRadius("")
-            console.log(res)
             setResult(res);
             setLoading(false);
-            db.collection("search").add({ ...res })
         }).catch(err => {
             console.log(err)
         })

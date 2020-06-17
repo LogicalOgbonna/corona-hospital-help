@@ -18,10 +18,10 @@ function Search({ location, onClickSearch, onSearchChange, value, onSearchByChan
                     <p className="text-center">Current Location: {location}</p>
                     <Input.Group compact>
                         <Select onChange={onSearchByChange} style={{ width: '50%' }} defaultValue="Hospitals">
-                            <Option value="Hospitals">Hospitals</Option>
-                            <Option value="Pharmacies">Pharmacies</Option>
-                            <Option value="Clinics">Clinics</Option>
-                            <Option value="Medical Offices">Medical Offices</Option>
+                            <Select.Option value="Hospitals">Hospitals</Select.Option>
+                            <Select.Option value="Pharmacies">Pharmacies</Select.Option>
+                            <Select.Option value="Clinics">Clinics</Select.Option>
+                            <Select.Option value="Medical Offices">Medical Offices</Select.Option>
                         </Select>
                         <Input value={value} onChange={onSearchChange} style={{ width: '30%' }} placeholder="Enter Radius" />
                         <Button onClick={onClickSearch} style={{ width: '15%', marginLeft: "4px" }} type="dashed" icon={<SearchOutlined />}>
