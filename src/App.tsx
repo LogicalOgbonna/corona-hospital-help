@@ -79,7 +79,7 @@ const GeoLocationNotEnabled = ({ title, subtitle, enabled }: GeoLocationNotEnabl
           <Col md="4" className="">
             <p className="text-center">{subtitle}</p>
             {enabled && <>
-              <p className="text-center">If Location is ON, please Refresh</p>
+              <p className="text-center">If your <code>Location</code> is ON, please Refresh</p>
               <Button onClick={() => window.location.reload()}>Refresh</Button>
             </>}
           </Col>
