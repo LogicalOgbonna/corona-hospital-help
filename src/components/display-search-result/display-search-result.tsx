@@ -1,7 +1,6 @@
 import { EllipsisOutlined, StarOutlined } from '@ant-design/icons';
-import { Card, Skeleton, Descriptions, Result, Space } from 'antd';
+import { Card, Col, Descriptions, Result, Row, Skeleton, Space } from 'antd';
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
 
 const { Meta } = Card;
 interface SearchResultProps {
@@ -12,17 +11,16 @@ interface IconTextProps {
     icon: any;
     text: string;
 }
-const IconText = ({ icon, text }: IconTextProps) => (
+export const IconText = ({ icon, text }: IconTextProps) => (
     <Space>
         {React.createElement(icon)}
         {text}
     </Space>
 );
 function SearchResult({ loading, result }: SearchResultProps) {
-    console.log(result)
     return (
         <Row className="justify-content-center my-5">
-            <Col style={{ minHeight: "250px" }} md="8">
+            <Col style={{ minHeight: "250px" }} span={16}>
                 <Row className="justify-content-center">
                     <Skeleton loading={loading} active>
 
@@ -31,7 +29,7 @@ function SearchResult({ loading, result }: SearchResultProps) {
                             title="No Hospital To Display"
                             subTitle="Select a radius to search for hospital."
                         />}
-                        {result.map((data: any) => <Col key={data.name} md="4" className="mt-2">
+                        {result.map((data: any) => <Col key={data.id} span={8} className="mt-2">
                             <Card
                                 style={{ width: 300 }}
                                 cover={
@@ -42,7 +40,7 @@ function SearchResult({ loading, result }: SearchResultProps) {
                                     />
                                 }
                                 actions={[
-                                    <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
+                                    <IconText icon={StarOutlined} text={data.rating} key="list-vertical-star-o" />,
                                     <EllipsisOutlined className="pull-right" key="ellipsis" />,
                                 ]}
                             >
@@ -50,7 +48,7 @@ function SearchResult({ loading, result }: SearchResultProps) {
                                     title={<Descriptions size="small" column={1} title={data.name}>
                                         <Descriptions.Item label="Status">{data.business_status}</Descriptions.Item>
                                         <Descriptions.Item label="Vicinity">{data.vicinity}</Descriptions.Item>
-                                        {data.opening_hours && <Descriptions.Item label="Open Now">{data.open_now ? "YES" : "NO"}</Descriptions.Item>}
+                                        {data.opening_hours && <Descriptions.Item label="Open Now">{data.opening_hours.open_now ? "YES" : "NO"}</Descriptions.Item>}
                                     </Descriptions>}
                                 />
                             </Card>

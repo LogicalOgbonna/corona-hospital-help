@@ -1,30 +1,41 @@
-import { Result, Spin } from 'antd';
-import React from 'react';
+import { Result, Spin, Button } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { geolocated } from "react-geolocated";
 import {
   BrowserRouter as Router,
-  Route, Switch
+  Switch
 } from "react-router-dom";
 import './App.css';
 import { Footer, Header } from "./components";
+import { auth, createUserProfileDocument } from './firebase';
 import { HomePage, RecentSearch } from "./pages";
+import Auth from './pages/auth/auth';
+import { GuestRoute, ProtectedRoute } from './routes/Protect';
 
 function App(props: any) {
-
-  if (!props.isGeolocationAvailable) return <GeoLocationNotEnabled title="Your browser does not support Geolocation" subtitle="Please Switch or Upgrade Your Browser" />
-  if (!props.isGeolocationEnabled) return <GeoLocationNotEnabled title="Geolocation is not ENABLED" subtitle="Please Enable Geolocation" />
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    auth.onAuthStateChanged(async (userAuth: any) => {
+      if (!userAuth) return setCurrentUser(null);
+      const userRef: any = await createUserProfileDocument(userAuth, {});
+      userRef.onSnapshot((snapShot: any) => {
+        setCurrentUser({ ...snapShot.data(), id: snapShot.id });
+      })
+    })
+    return () => {
+    }
+  }, []);
+  if (!props.isGeolocationAvailable) return <GeoLocationNotEnabled enabled={false} title="Your browser does not support Geolocation" subtitle="Please Switch or Upgrade Your Browser" />
+  if (!props.isGeolocationEnabled) return <GeoLocationNotEnabled enabled={true} title="Geolocation is not ENABLED" subtitle="Please Enable Geolocation" />
   if (!props.coords) return <Loading />
   return (
     <Router>
-      <Header />
+      <Header user={currentUser} />
       <Switch>
-        <Route path="/" exact>
-          <HomePage coords={props.coords} lat={props.coords.latitude} lng={props.coords.longitude} />
-        </Route>
-        <Route path="/search-results">
-          <RecentSearch />
-        </Route>
+        <ProtectedRoute exact={true} path="/" user={currentUser} component={HomePage} coords={props.coords} />
+        <ProtectedRoute user={currentUser} coords={props.coords} path="/search-results" exact={false} component={RecentSearch} />
+        <GuestRoute user={currentUser} path="/signin" exact={true} component={Auth} />
       </Switch>
       <Footer
         lat={props.coords.latitude}
@@ -56,17 +67,21 @@ const Loading = () => <Row style={{ marginTop: "10%" }} className="justify-conte
 interface GeoLocationNotEnabledProps {
   title: string;
   subtitle: string;
+  enabled: boolean
 }
-const GeoLocationNotEnabled = ({ title, subtitle }: GeoLocationNotEnabledProps) => <Row style={{ marginTop: "10%" }} className="justify-content-center mt-5">
+const GeoLocationNotEnabled = ({ title, subtitle, enabled }: GeoLocationNotEnabledProps) => <Row style={{ marginTop: "10%" }} className="justify-content-center mt-5">
   <Col md="8" className="mt-5">
     <Result
       status="500"
       title={title}
       subTitle={
         <Row className="justify-content-center">
-          <Col md="2" className="">
-            <Spin className="ml-3" size="small" />
-            <p>{subtitle}...</p>
+          <Col md="4" className="">
+            <p className="text-center">{subtitle}</p>
+            {enabled && <>
+              <p className="text-center">If Location is ON, please Refresh</p>
+              <Button onClick={() => window.location.reload()}>Refresh</Button>
+            </>}
           </Col>
         </Row>}
     />

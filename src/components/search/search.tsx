@@ -1,7 +1,6 @@
-import React from 'react';
-import { Input, Select, Row, Col, Button } from 'antd';
-import { Option } from 'antd/lib/mentions';
 import { SearchOutlined } from '@ant-design/icons';
+import { Button, Col, Input, Row, Select } from 'antd';
+import React from 'react';
 
 interface SearchProps {
     location: string;
