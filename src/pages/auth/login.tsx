@@ -51,8 +51,8 @@ const Login = () => {
                         Log in
                                 </Button>
                     <Button onClick={() => signInWithGoogle()} style={{ width: "50%", marginLeft: "20%" }} type="primary" className="login-form-button">
-                        Sing In With Google
-                                </Button>
+                        Sign In With Google
+                    </Button>
                 </Form.Item>
             </Form>
         </>

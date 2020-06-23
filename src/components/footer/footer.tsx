@@ -6,6 +6,7 @@ const {
     withScriptjs,
     withGoogleMap,
     GoogleMap,
+    Marker
 } = require("react-google-maps");
 
 interface MapWithAMarkerWithLabelProps {
@@ -19,11 +20,12 @@ const MapWithAMarkerWithLabel = compose(
     <Row className="footer justify-content-center">
         <Col md="8">
 
-            {<GoogleMap
+            <GoogleMap
                 defaultZoom={12}
                 defaultCenter={{ lat: lat, lng: lng }}
             >
-            </GoogleMap>}
+                <Marker position={{ lat: lat, lng: lng }} />
+            </GoogleMap>
 
         </Col>
     </Row>
